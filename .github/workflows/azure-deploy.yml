@@ -1,0 +1,53 @@
+name: Deploy to Azure App Service
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20.x'
+  AZURE_WEBAPP_NAME: 'gift-list-app' # Cambia esto por el nombre de tu App Service
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build Next.js application
+      run: npm run build
+
+    - name: Create deployment package
+      run: |
+        mkdir deploy
+        cp -r .next deploy/
+        cp -r node_modules deploy/
+        cp -r public deploy/ || true
+        cp package*.json deploy/
+        cp server.js deploy/
+        cp -r lib deploy/
+        cp db.json deploy/
+        cd deploy && zip -r ../deploy.zip .
+
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: deploy.zip
+
+    - name: Clean up
+      run: rm -rf deploy deploy.zip
