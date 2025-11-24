@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  /* Paleta wabi-sabi e industrial */
-  --stone-50: #fafaf9;
-  --stone-100: #f5f5f4;
-  --stone-200: #e7e5e4;
-  --stone-300: #d6d3d1;
-  --stone-400: #a8a29e;
-  --stone-500: #78716c;
-  --stone-600: #57534e;
-  --stone-700: #44403c;
-  --stone-800: #292524;
-  --stone-900: #1c1917;
+  /* Paleta Noche de las Velitas - Colombian Christmas */
+  --stone-50: #f7f3e9;
+  --stone-100: #fef6e4;
+  --stone-200: #f9eedb;
+  --stone-300: #eddcc9;
+  --stone-400: #d4c4ad;
+  --stone-500: #a89780;
+  --stone-600: #796b5a;
+  --stone-700: #4a3f33;
+  --stone-800: #2c2c2c;
+  --stone-900: #1a2332;
   
-  --accent-rust: #8b5a3c;
-  --accent-clay: #b4846c;
-  --accent-sage: #9ca986;
+  --accent-candlelight: #ffd89b;
+  --accent-flame: #d97642;
+  --accent-christmas: #8b1e3f;
   
-  --background: #fafaf9;
-  --foreground: #292524;
-  --border: #e7e5e4;
+  --background: #f7f3e9;
+  --foreground: #2c2c2c;
+  --border: #eddcc9;
 }
 
 @theme inline {
@@ -36,9 +36,9 @@
   --color-stone-700: var(--stone-700);
   --color-stone-800: var(--stone-800);
   --color-stone-900: var(--stone-900);
-  --color-rust: var(--accent-rust);
-  --color-clay: var(--accent-clay);
-  --color-sage: var(--accent-sage);
+  --color-candlelight: var(--accent-candlelight);
+  --color-flame: var(--accent-flame);
+  --color-christmas: var(--accent-christmas);
   --font-sans: system-ui, -apple-system, sans-serif;
   --font-mono: 'Courier New', monospace;
 }
