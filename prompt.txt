@@ -1,0 +1,191 @@
+Eres un desarrollador de FE senior con experiencia en diseño minimalista, wabi-sabi e industrial.
+
+Haz la aplicación usando como stack a Next.js con TypeScript, Tailwind CSS v4, y lucide-react para iconos.
+
+La aplicación es una lista de regalos colaborativa en tiempo real con las siguientes características:
+
+## Modelo de Datos
+
+```typescript
+interface Regalo {
+  id: number;
+  nombre: string;
+  url?: string;
+  url_imagen?: string;
+  lugarCompra?: string;
+  tomado: boolean;
+}
+
+interface Persona {
+  id: number;
+  nombre: string;
+  regalos: Regalo[];
+}
+```
+
+## Base de Datos
+
+Usa un archivo JSON local (db.json) con estructura:
+```json
+{
+  "personas": []
+}
+```
+
+Crea utilidades en lib/db.ts para:
+- readDatabase()
+- writeDatabase()
+- generateId()
+
+## Backend
+
+1. Servidor Express personalizado (server.js) que:
+   - Envuelve Next.js para servir assets estáticos
+   - Integra Socket.io para WebSockets
+   - Usa puerto process.env.PORT || 3000
+   - Maneja eventos de personas y regalos en tiempo real
+
+2. API Routes de Next.js para CRUD:
+   - GET/POST /api/personas
+   - GET/PUT/DELETE /api/personas/[personaId]
+   - POST /api/personas/[personaId]/regalos
+   - GET/PUT/DELETE /api/personas/[personaId]/regalos/[regaloId]
+   - POST /api/metadata (extrae og:image de URLs con Cheerio)
+
+## Frontend
+
+### Landing Page (/)
+- Lista de personas con nombre y contador de regalos
+- Modal para adicionar persona (solo nombre)
+- Modal para editar persona
+- Modal de confirmación para eliminar persona
+- Menú de 3 puntos (dropdown) por persona con: Ver Regalos, Editar, Eliminar
+- Botón flotante para adicionar persona
+- Responsive: mobile-first con breakpoints sm: y md:
+
+### Página de Regalos (/persona/[personaId]/regalos)
+- Header con nombre de persona y botón "Volver"
+- Lista de regalos con:
+  - Imagen (si existe url_imagen)
+  - Nombre del regalo
+  - Checkbox "tomado" (toggle on click)
+  - Menú de 3 puntos con: Editar, Eliminar
+  - Link al URL si existe
+- Modal para adicionar regalo con campos:
+  - Nombre (requerido)
+  - URL (opcional, extrae og:image automáticamente al hacer blur)
+  - URL de imagen (opcional, pre-llenado si hay og:image)
+  - Lugar de compra (opcional)
+- Modal para editar regalo (mismos campos)
+- Modal de confirmación para eliminar
+- Límite de 10 regalos por persona (ocultar botón adicionar si se alcanza)
+- Responsive
+
+## Tiempo Real con WebSockets
+
+1. Context provider en lib/socket.tsx:
+   - Inicializa Socket.io client
+   - Maneja conexión/desconexión
+   - Escucha eventos: persona:created, persona:updated, persona:deleted, regalo:created, regalo:updated, regalo:deleted
+   - Gestiona cola de notificaciones
+   - Provee hook useSocket()
+
+2. Eventos emitidos desde frontend incluyen contexto completo:
+```typescript
+socket.emit('regalo:updated', {
+  personaId: number,
+  personaNombre: string,
+  regalo: Regalo
+});
+```
+
+3. Server broadcast eventos a otros clientes (no al emisor)
+
+## Sistema de Notificaciones
+
+1. Componente NotificationDock:
+   - Posicionado top-center fixed
+   - Muestra notificaciones con animación slideDown
+   - Auto-dismiss después de 5 segundos
+   - Botón manual de cierre
+   - Mensajes descriptivos:
+     - "La persona 'Juan' fue creada/actualizada/eliminada"
+     - "El regalo 'Bicicleta' de María fue creado/modificado/eliminado"
+
+2. Integrado en app/layout.tsx mediante NotificationDockWrapper
+
+## Diseño Wabi-Sabi/Industrial
+
+En app/globals.css define paleta:
+- Stone 50-900: Tonos tierra principales
+- Rust (#8b5a3c): Acentos cálidos
+- Clay (#b4846c): Tonos arcilla
+- Sage (#9ca986): Verde salvia
+
+Principios:
+- Minimalismo con espacios generosos
+- System fonts únicamente
+- Letter-spacing: -0.01em
+- Bordes limpios y definidos
+- Sin sombras excesivas
+- Asimetrías sutiles
+
+## Componentes Reutilizables
+
+1. Modal.tsx: 
+   - Props: isOpen, onClose, title, children
+   - Cierra con ESC o click fuera
+   - useRef para detección
+
+2. Button.tsx:
+   - Variantes: primary, secondary, danger, ghost
+   - Responsive text sizing
+
+3. Input.tsx:
+   - Label, campo, mensaje de error
+   - Responsive
+
+4. Dropdown.tsx:
+   - Menú de 3 puntos
+   - Click-outside para cerrar
+   - DropdownItem component
+
+## Configuración
+
+1. package.json scripts:
+   - "dev": "node server.js"
+   - "build": "next build"
+   - "start": "NODE_ENV=production node server.js"
+
+2. Instalar dependencias:
+   - express, socket.io, socket.io-client, cheerio
+
+3. Express 5.x: usar expressApp.use((req, res) => handle(req, res))
+
+## Deployment Azure
+
+1. Workflow de GitHub Actions (.github/workflows/azure-deploy.yml):
+   - Build Next.js
+   - Empaquetar con dependencias
+   - Deploy a Azure App Service
+
+2. web.config para IIS:
+   - Habilitar WebSockets
+   - Configurar iisnode
+   - Rewrite rules para Next.js
+
+3. Documentación en AZURE_DEPLOYMENT.md con:
+   - Comandos Azure CLI
+   - Configuración de secrets
+   - Troubleshooting
+
+## Convenciones Importantes
+
+- Usar [personaId] en rutas dinámicas (no [id])
+- Async params destructuring en API routes (Next.js 15+)
+- Socket.io path: '/socket.io'
+- useState con lazy initializer para socket
+- Tailwind v4 usa @theme inline
+- React Compiler habilitado
+
+Crea el proyecto completo siguiendo estas especificaciones exactas.
