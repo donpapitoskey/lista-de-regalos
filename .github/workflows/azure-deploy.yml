@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: '20.x'
+  NODE_VERSION: '24.x'
   AZURE_WEBAPP_NAME: 'lista-de-regalos' # Cambia esto por el nombre de tu App Service
 
 jobs:
@@ -36,10 +36,15 @@ jobs:
         cp -r .next deploy/
         cp -r node_modules deploy/
         cp -r public deploy/ || true
+        cp -r app deploy/
+        cp -r components deploy/
+        cp -r lib deploy/
+        cp -r types deploy/
         cp package*.json deploy/
         cp server.js deploy/
-        cp -r lib deploy/
+        cp next.config.ts deploy/
         cp db.json deploy/
+        cp web.config deploy/ || true
         cd deploy && zip -r ../deploy.zip .
 
     - name: Deploy to Azure Web App
