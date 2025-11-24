@@ -8,7 +8,7 @@ on:
 
 env:
   NODE_VERSION: '20.x'
-  AZURE_WEBAPP_NAME: 'gift-list-app' # Cambia esto por el nombre de tu App Service
+  AZURE_WEBAPP_NAME: 'lista-de-regalos' # Cambia esto por el nombre de tu App Service
 
 jobs:
   build-and-deploy:
