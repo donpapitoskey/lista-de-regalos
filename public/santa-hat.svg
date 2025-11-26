@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <!-- Hat body (red triangle) -->
+  <path d="M6 30 L20 6 L34 30 Z" fill="#c1272d" stroke="#a01f25" stroke-width="1"/>
+  <!-- White fur trim -->
+  <rect x="4" y="28" width="32" height="6" rx="3" fill="#f8f4e8" stroke="#d1c6b4" stroke-width="1"/>
+  <!-- Pom pom -->
+  <circle cx="22" cy="8" r="5" fill="#f8f4e8" stroke="#d1c6b4" stroke-width="1"/>
+</svg>

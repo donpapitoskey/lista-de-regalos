@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  /* Paleta Noche de las Velitas - Colombian Christmas */
-  --stone-50: #f7f3e9;
-  --stone-100: #fef6e4;
-  --stone-200: #f9eedb;
-  --stone-300: #eddcc9;
-  --stone-400: #d4c4ad;
-  --stone-500: #a89780;
-  --stone-600: #796b5a;
-  --stone-700: #4a3f33;
-  --stone-800: #2c2c2c;
-  --stone-900: #1a2332;
+  /* Paleta Flores de Nochebuena - Colombian Christmas */
+  --stone-50: #f8f4e8;
+  --stone-100: #f4ede4;
+  --stone-200: #e8e0d0;
+  --stone-300: #d1c6b4;
+  --stone-400: #bcae9a;
+  --stone-500: #a79681;
+  --stone-600: #8a7a69;
+  --stone-700: #6d5f51;
+  --stone-800: #4f453a;
+  --stone-900: #2d5016;
   
-  --accent-candlelight: #ffd89b;
-  --accent-flame: #d97642;
-  --accent-christmas: #8b1e3f;
+  --accent-poinsettia: #c1272d;
+  --accent-gold: #d4af37;
+  --accent-forest: #2d5016;
   
-  --background: #f7f3e9;
-  --foreground: #2c2c2c;
-  --border: #eddcc9;
+  --background: #f8f4e8;
+  --foreground: #1a2902;
+  --border: #e8e0d0;
 }
 
 @theme inline {
@@ -36,19 +36,46 @@
   --color-stone-700: var(--stone-700);
   --color-stone-800: var(--stone-800);
   --color-stone-900: var(--stone-900);
-  --color-candlelight: var(--accent-candlelight);
-  --color-flame: var(--accent-flame);
-  --color-christmas: var(--accent-christmas);
+  --color-poinsettia: var(--accent-poinsettia);
+  --color-gold: var(--accent-gold);
+  --color-forest: var(--accent-forest);
   --font-sans: system-ui, -apple-system, sans-serif;
   --font-mono: 'Courier New', monospace;
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(
+    135deg,
+    #1a3d14 0%,
+    #2d5016 15%,
+    #1a3d14 30%,
+    #0f2910 50%,
+    #1a3d14 70%,
+    #2d5016 85%,
+    #1a3d14 100%
+  );
+  background-attachment: fixed;
+  min-height: 100vh;
   color: var(--foreground);
   font-family: var(--font-sans);
   line-height: 1.6;
   letter-spacing: -0.01em;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(193, 39, 45, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 * {
@@ -66,6 +93,74 @@ body {
   }
 }
 
+@keyframes snowfall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0.3;
+  }
+}
+
+@keyframes snowfall-slow {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh) rotate(180deg);
+    opacity: 0.2;
+  }
+}
+
+@keyframes sway {
+  0%, 100% {
+    margin-left: 0;
+  }
+  50% {
+    margin-left: 30px;
+  }
+}
+
 .animate-slideDown {
   animation: slideDown 0.3s ease-out;
 }
+
+.snowfall-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.snowflake-fall {
+  position: absolute;
+  top: -50px;
+  color: #fff;
+  opacity: 0.9;
+  font-size: 1.5rem;
+  text-shadow: 0 0 10px rgba(255,255,255,0.9), 0 0 20px rgba(255,255,255,0.5);
+  animation: snowfall linear infinite, sway ease-in-out infinite;
+}
+
+.snowflake-fall:nth-child(1) { left: 5%; animation-duration: 8s, 3s; animation-delay: 0s; font-size: 1.2rem; }
+.snowflake-fall:nth-child(2) { left: 15%; animation-duration: 12s, 4s; animation-delay: 1s; font-size: 1rem; }
+.snowflake-fall:nth-child(3) { left: 25%; animation-duration: 10s, 2.5s; animation-delay: 2s; font-size: 1.5rem; }
+.snowflake-fall:nth-child(4) { left: 35%; animation-duration: 14s, 3.5s; animation-delay: 0.5s; font-size: 0.8rem; }
+.snowflake-fall:nth-child(5) { left: 45%; animation-duration: 9s, 2s; animation-delay: 1.5s; font-size: 1.3rem; }
+.snowflake-fall:nth-child(6) { left: 55%; animation-duration: 11s, 4s; animation-delay: 3s; font-size: 1.1rem; }
+.snowflake-fall:nth-child(7) { left: 65%; animation-duration: 13s, 3s; animation-delay: 2.5s; font-size: 1.4rem; }
+.snowflake-fall:nth-child(8) { left: 75%; animation-duration: 8s, 2.5s; animation-delay: 4s; font-size: 0.9rem; }
+.snowflake-fall:nth-child(9) { left: 85%; animation-duration: 15s, 3.5s; animation-delay: 1s; font-size: 1.2rem; }
+.snowflake-fall:nth-child(10) { left: 95%; animation-duration: 10s, 2s; animation-delay: 0s; font-size: 1rem; }
+.snowflake-fall:nth-child(11) { left: 10%; animation-duration: 11s, 3s; animation-delay: 3.5s; font-size: 1.3rem; }
+.snowflake-fall:nth-child(12) { left: 30%; animation-duration: 9s, 2.5s; animation-delay: 2s; font-size: 0.8rem; }
+.snowflake-fall:nth-child(13) { left: 50%; animation-duration: 13s, 4s; animation-delay: 4.5s; font-size: 1.5rem; }
+.snowflake-fall:nth-child(14) { left: 70%; animation-duration: 7s, 3s; animation-delay: 1.5s; font-size: 1.1rem; }
+.snowflake-fall:nth-child(15) { left: 90%; animation-duration: 12s, 2s; animation-delay: 0.5s; font-size: 1rem; }

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SocketProvider } from "@/lib/socket";
 import NotificationDockWrapper from "@/components/NotificationDockWrapper";
+import Snowfall from "@/components/Snowfall";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SocketProvider>
+          <Snowfall />
           <NotificationDockWrapper />
           {children}
         </SocketProvider>

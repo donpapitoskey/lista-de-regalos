@@ -161,15 +161,16 @@ export default function HomePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <p className="text-stone-600">Cargando...</p>
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-white/80">Cargando...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-stone-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    <div className="min-h-screen py-8 sm:py-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 sm:p-8 border border-white/20">
         {/* Header */}
         <div className="mb-8 sm:mb-12">
           <div className="flex items-center gap-2 sm:gap-3 mb-2">
@@ -241,6 +242,7 @@ export default function HomePage() {
             </Button>
           </div>
         )}
+        </div>
       </div>
 
       {/* Modal Adicionar */}
