@@ -294,6 +294,9 @@ export default function RegalosPage() {
             {persona.regalos.length}{' '}
             {persona.regalos.length === 1 ? 'regalo' : 'regalos'}
           </p>
+          <p className="text-stone-500 text-xs sm:text-sm ml-8 sm:ml-11 mt-2 italic">
+            🎄 Sugerencia: Que el valor del regalo no supere los $100.000 COP
+          </p>
         </div>
 
         {/* Lista de regalos */}
